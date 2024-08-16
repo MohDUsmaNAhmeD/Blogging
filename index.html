@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awesome Blog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+</head>
+<body class="bg-gray-100 font-sans flex flex-col min-h-screen">
+    <!-- Ye Header hai -->
+    <header class="bg-blue-600 text-white py-6 px-8 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+          <h1 class="text-3xl font-extrabold tracking-tight">Blog</h1>
+          <nav>
+            <ul class="flex space-x-8">
+              <li><a href="" class="text-lg font-medium hover:text-yellow-300 transition duration-300 ease-in-out transform hover:scale-110">Blogs</a></li>
+              <li><a href="Dashboard.html" class="text-lg font-medium hover:text-yellow-300 transition duration-300 ease-in-out transform hover:scale-110">Dashboard</a></li>
+              <li><a href="Login.html" id="logoutBtn"  class="text-lg font-medium bg-red-500 hover:bg-red-600 px-4 py-2 rounded-full transition duration-300 ease-in-out transform hover:scale-110">Logout</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+    <!-- is Main content hai sara ka saara -->
+    <main class="container mx-auto px-4 py-8 flex-grow">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- posts -->
+            <section class="lg:col-span-2">
+                <h2 class="text-2xl font-semibold mb-6 text-gray-800">Featured Post</h2>
+                <div id="featuredPost" class="bg-white rounded-lg shadow-md p-6 mb-8"></div>
+
+                <h2 class="text-2xl font-semibold mb-6 text-gray-800">Latest Articles</h2>
+                <div id="latestArticles" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+            </section>
+
+            <!-- Sidebar AREA -->
+            <aside class="lg:col-span-1">
+                <!-- More section -->
+                <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">Read More</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-blue-600 hover:text-blue-800 hover:underline">Article 1</a></li>
+                        <li><a href="#" class="text-blue-600 hover:text-blue-800 hover:underline">Article 2</a></li>
+                        <li><a href="#" class="text-blue-600 hover:text-blue-800 hover:underline">Article 3</a></li>
+                    </ul>
+                </div>
+
+                <!-- About Writer -->
+                <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">About Writer</h3>
+                    <img src="https://th.bing.com/th/id/OIP.5FSJmfksykIsqy2AG5VGjQHaEc?rs=1&pid=ImgDetMain" alt="Writer" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover">
+                    <p class="text-gray-600 text-center">Passionate writer sharing insights on various topics.</p>
+                </div>
+
+                <!-- Search part -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">Search</h3>
+                    <form>
+                        <input type="text" placeholder="Search in blog" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </form>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Copy from previus Footer -->
+    <footer class="bg-blue-600 text-white py-12 px-8">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div class="space-y-4">
+            <h2 class="text-2xl font-bold mb-4">Blog</h2>
+            <p class="text-gray-300">Your go-to source for insightful articles and the latest updates in technology and design.</p>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
+            <ul class="space-y-2">
+              <li><a href="#" class="hover:text-yellow-300 transition duration-300">Home</a></li>
+              <li><a href="#" class="hover:text-yellow-300 transition duration-300">About Us</a></li>
+              <li><a href="#" class="hover:text-yellow-300 transition duration-300">Contact</a></li>
+              <li><a href="#" class="hover:text-yellow-300 transition duration-300">Privacy Policy</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-4">Categories</h3>
+            <ul class="space-y-2">
+              <li><a href="#" class="hover:text-yellow-300 transition duration-300">Technology</a></li>
+              <li><a href="#" class="hover:text-yellow-300 transition duration-300">Design</a></li>
+              <li><a href="#" class="hover:text-yellow-300 transition duration-300">Business</a></li>
+              <li><a href="#" class="hover:text-yellow-300 transition duration-300">Lifestyle</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-4">Stay Connected</h3>
+            <p class="mb-4 text-gray-300">Subscribe to our newsletter for weekly updates.</p>
+            <form class="flex">
+              <input type="email" placeholder="Enter your email" class="px-4 py-2 w-full rounded-l-md focus:outline-none focus:ring-2 focus:ring-yellow-300 text-gray-900">
+              <button type="submit" class="bg-yellow-500 hover:bg-yellow-600 px-4 py-2 rounded-r-md transition duration-300">Subscribe</button>
+            </form>
+          </div>
+        </div>
+        <div class="mt-8 pt-8 border-t border-purple-700">
+          <p class="text-center text-gray-400">&copy; 2024 Blog. All rights reserved.</p>
+        </div>
+      </footer>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDgQoFOkZCBCPZPy60lg_LToWCERqk_bMU",
+            authDomain: "blog-e57de.firebaseapp.com",
+            projectId: "blog-e57de",
+            storageBucket: "blog-e57de.appspot.com",
+            messagingSenderId: "987649814527",
+            appId: "1:987649814527:web:dcf766e7f8defe8207c1ca"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            firebase.auth().signOut().then(() => {
+                console.log('User signed out');
+                window.location.href = 'login.html';
+            }).catch((error) => {
+                console.error('Sign out error', error);
+            });
+        });
+
+        // isse patachal jata hai ki featured post hai to get and display it
+        const featuredPostElement = document.getElementById('featuredPost');
+        const latestArticlesElement = document.getElementById('latestArticles');
+
+        db.collection('posts').where('featured', '==', true).orderBy('createdAt', 'desc').limit(1).get()
+            .then((querySnapshot) => {
+                if (!querySnapshot.empty) {
+                    querySnapshot.forEach((doc) => {
+                        const post = doc.data();
+                        featuredPostElement.innerHTML = `
+                            <img src="${post.imageUrl}" alt="${post.title}" class="w-full h-64 object-fit mb-4 rounded-lg">
+                            <h2 class="text-2xl font-semibold mb-4 text-gray-800">${post.title}</h2>
+                            <p class="text-gray-600">${post.content}</p>
+                        `;
+                    });
+                } else {
+                    featuredPostElement.innerHTML = `<p class="text-center text-gray-500">No featured post available.Add feature post from your dahboard</p>`;
+                }
+            })
+            .catch((error) => {
+                console.error('Error fetching featured post:', error);
+                featuredPostElement.innerHTML = `<p class="text-center text-gray-500">Error loading featured post</p>`;
+            });
+
+                // isse patachaljata hai ki latest post hai to get and display it
+
+        db.collection('posts').orderBy('createdAt', 'desc').limit(3).get()
+            .then((querySnapshot) => {
+                if (!querySnapshot.empty) {
+                    latestArticlesElement.innerHTML = '';
+                    querySnapshot.forEach((doc) => {
+                        const post = doc.data();
+                        latestArticlesElement.innerHTML += `
+                            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                                <img src="${post.imageUrl}" alt="${post.title}" class="w-full h-48 object-cover">
+                                <div class="p-6">
+                                    <h3 class="text-xl font-semibold mb-2 text-gray-800">${post.title}</h3>
+                                    <p class="text-gray-600">${post.content.substring(0, 100)}...</p>
+                                    <a href="#" class="inline-block mt-4 text-blue-600 hover:text-blue-800 hover:underline">Read more</a>
+                                </div>
+                            </div>
+                        `;
+                    });
+                } else {
+                    latestArticlesElement.innerHTML = `<p class="text-center text-gray-500">No articles available</p>`;
+                }
+            })
+            .catch((error) => {
+                console.error('Error fetching articles:', error);
+                latestArticlesElement.innerHTML = `<p class="text-center text-gray-500">Error loading articles</p>`;
+            });
+    </script>
+</body>
+</html>

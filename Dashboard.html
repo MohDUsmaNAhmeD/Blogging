@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <header class="bg-blue-600 text-white py-6 px-8 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+          <h1 class="text-3xl font-extrabold tracking-tight">Blog</h1>
+          <nav>
+            <ul class="flex space-x-8">
+              <li><a href="index.html" class="text-lg font-medium hover:text-yellow-300 transition duration-300 ease-in-out transform hover:scale-110">Blogs</a></li>
+              <li><a href="" class="text-lg font-medium hover:text-yellow-300 transition duration-300 ease-in-out transform hover:scale-110">Dashboard</a></li>
+              <li><a href="Login.html" id="logoutBtn"  class="text-lg font-medium bg-red-500 hover:bg-red-600 px-4 py-2 rounded-full transition duration-300 ease-in-out transform hover:scale-110">Logout</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    <!-- Main content -->
+    <main class="container mx-auto px-4 py-8 flex-grow">
+        <div class="bg-white p-6 rounded-lg shadow-md max-w-2xl mx-auto">
+            <h2 class="text-2xl font-semibold mb-6 text-gray-800">Add New Blog Post</h2>
+            <form id="addPostForm" class="space-y-4">
+                <div>
+                    <label for="title" class="block text-gray-700 font-medium mb-2">Title</label>
+                    <input type="text" id="title" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                </div>
+                <div>
+                    <label for="content" class="block text-gray-700 font-medium mb-2">Content</label>
+                    <textarea id="content" rows="4" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
+                </div>
+                <div>
+                    <label for="imageUrl" class="block text-gray-700 font-medium mb-2">Image URL</label>
+                    <input type="text" id="imageUrl" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                </div>
+                <div>
+                    <label for="featured" class="flex items-center">
+                        <input type="checkbox" id="featured" class="form-checkbox h-5 w-5 text-blue-600">
+                        <span class="ml-2 text-gray-700">Mark as featured post</span>
+                    </label>
+                </div>
+                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition duration-300">Add Post</button>
+            </form>
+        </div>
+    </main>
+
+    <!-- Copy from previus Footer -->
+    <footer class="bg-blue-600 text-white py-12 px-8">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div class="space-y-4">
+            <h2 class="text-2xl font-bold mb-4">Blog</h2>
+            <p class="text-gray-300">Your go-to source for insightful articles and the latest updates in technology and design.</p>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
+            <ul class="space-y-2">
+              <li><a href="#" class="hover:text-yellow-300 transition duration-300">Home</a></li>
+              <li><a href="#" class="hover:text-yellow-300 transition duration-300">About Us</a></li>
+              <li><a href="#" class="hover:text-yellow-300 transition duration-300">Contact</a></li>
+              <li><a href="#" class="hover:text-yellow-300 transition duration-300">Privacy Policy</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-4">Categories</h3>
+            <ul class="space-y-2">
+              <li><a href="#" class="hover:text-yellow-300 transition duration-300">Technology</a></li>
+              <li><a href="#" class="hover:text-yellow-300 transition duration-300">Design</a></li>
+              <li><a href="#" class="hover:text-yellow-300 transition duration-300">Business</a></li>
+              <li><a href="#" class="hover:text-yellow-300 transition duration-300">Lifestyle</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-4">Stay Connected</h3>
+            <p class="mb-4 text-gray-300">Subscribe to our newsletter for weekly updates.</p>
+            <form class="flex">
+              <input type="email" placeholder="Enter your email" class="px-4 py-2 w-full rounded-l-md focus:outline-none focus:ring-2 focus:ring-yellow-300 text-gray-900">
+              <button type="submit" class="bg-yellow-500 hover:bg-yellow-600 px-4 py-2 rounded-r-md transition duration-300">Subscribe</button>
+            </form>
+          </div>
+        </div>
+        
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDgQoFOkZCBCPZPy60lg_LToWCERqk_bMU",
+            authDomain: "blog-e57de.firebaseapp.com",
+            projectId: "blog-e57de",
+            storageBucket: "blog-e57de.appspot.com",
+            messagingSenderId: "987649814527",
+            appId: "1:987649814527:web:dcf766e7f8defe8207c1ca"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Logout functionality
+        const logoutBtn = document.getElementById('logoutBtn');
+        logoutBtn.addEventListener('click', () => {
+            auth.signOut().then(() => {
+                console.log('User signed out');
+                window.location.href = 'login.html';
+            }).catch((error) => {
+                console.error('Sign error', error);
+            });
+        });
+
+        // Check authentication state
+        auth.onAuthStateChanged((user) => {
+            if (!user) {
+                // Redirect to login page if user is not authenticated
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Add new blog post
+        document.getElementById('addPostForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            
+            // Get form values
+            const title = document.getElementById('title').value;
+            const content = document.getElementById('content').value;
+            const imageUrl = document.getElementById('imageUrl').value;
+            const featured = document.getElementById('featured').checked;
+
+            // Add new post to Firestore
+            db.collection('posts').add({
+                title: title,
+                content: content,
+                imageUrl: imageUrl,
+                createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
+                featured: featured
+            })
+            .then(() => {
+                console.log('Post added successfully');
+                // Reset form after successful submission
+                document.getElementById('addPostForm').reset();
+            })
+            .catch((error) => {
+                console.error('Error adding post: ', error);
+            });
+        });
+    </script>
+</body>
+</html>
